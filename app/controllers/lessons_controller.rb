@@ -1,3 +1,5 @@
+require "digest"
+
 class LessonsController < ApplicationController
   before_action :set_lesson, only: %i[ show edit update destroy video ]
 
@@ -35,6 +37,16 @@ class LessonsController < ApplicationController
     response.headers["Accept-Ranges"] = "bytes"
     response.headers["Content-Type"] = content_type
 
+    # Optimized headers for faster loading
+    response.headers["Cache-Control"] = "public, max-age=3600" # Cache for 1 hour
+    response.headers["ETag"] = Digest::MD5.hexdigest("#{video_path}-#{File.mtime(video_path)}")
+
+    # Check if client has cached version
+    if request.headers["HTTP_IF_NONE_MATCH"] == response.headers["ETag"]
+      head :not_modified
+      return
+    end
+
     # Handle range requests for video seeking
     if request.headers["HTTP_RANGE"]
       Rails.logger.info("Handling range request: #{request.headers['HTTP_RANGE']}")
@@ -67,14 +79,13 @@ class LessonsController < ApplicationController
         head :bad_request
       end
     else
-      # Initial request - serve first chunk or entire file for small files
+      # Initial request - serve larger chunk for faster initial loading
       Rails.logger.info("Serving initial video request")
 
-      # For video files, browsers typically make an initial range request
-      # If no range is specified, we can either serve the whole file or a chunk
-      if file_size > 1.megabyte
-        # For large files, serve first chunk to start playback quickly
-        chunk_size = 1.megabyte
+      # Serve larger initial chunk for faster playback start
+      if file_size > 2.megabytes
+        # Serve first 2MB to get video started quickly
+        chunk_size = 2.megabytes
         response.headers["Content-Range"] = "bytes 0-#{chunk_size - 1}/#{file_size}"
         response.headers["Content-Length"] = chunk_size.to_s
         response.status = 206
