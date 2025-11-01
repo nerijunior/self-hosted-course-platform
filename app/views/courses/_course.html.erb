@@ -1,0 +1,18 @@
+<div id="<%= dom_id course %>">
+  <div class="card bg-base-100 w-96 shadow-sm">
+    <figure class="px-10 pt-10">
+      <img
+        src="https://img.daisyui.com/images/stock/photo-1606107557195-0e29a4b5b4aa.webp"
+        alt="Shoes"
+        class="rounded-xl" />
+    </figure>
+    <div class="card-body items-center text-center">
+      <h2 class="card-title"><%= course.name%></h2>
+      <p><%= course.units.count %> Unidades</p>
+      <p><%= course.path %></p>
+      <div class="card-actions">
+        <%= link_to 'Acessar', course, class: "btn btn-primary" %>
+      </div>
+    </div>
+  </div>
+</div>

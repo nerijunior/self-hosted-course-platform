@@ -1,0 +1,16 @@
+<p style="color: green"><%= notice %></p>
+
+<% content_for :title, "Lessos" %>
+
+<h1>Lessos</h1>
+
+<div id="lessos">
+  <% @lessos.each do |lesso| %>
+    <%= render lesso %>
+    <p>
+      <%= link_to "Show this lesso", lesso %>
+    </p>
+  <% end %>
+</div>
+
+<%= link_to "New lesso", new_lesso_path %>

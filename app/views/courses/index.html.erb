@@ -1,0 +1,9 @@
+<p style="color: green"><%= notice %></p>
+
+<% content_for :title, "Todos os cursos" %>
+
+<div id="courses" class="mb-3">
+  <% @courses.each do |course| %>
+    <%= render course %>
+  <% end %>
+</div>

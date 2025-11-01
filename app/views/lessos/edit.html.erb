@@ -1,0 +1,12 @@
+<% content_for :title, "Editing lesso" %>
+
+<h1>Editing lesso</h1>
+
+<%= render "form", lesso: @lesso %>
+
+<br>
+
+<div>
+  <%= link_to "Show this lesso", @lesso %> |
+  <%= link_to "Back to lessos", lessos_path %>
+</div>

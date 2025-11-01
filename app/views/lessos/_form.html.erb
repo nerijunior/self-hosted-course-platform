@@ -1,0 +1,37 @@
+<%= form_with(model: lesso) do |form| %>
+  <% if lesso.errors.any? %>
+    <div style="color: red">
+      <h2><%= pluralize(lesso.errors.count, "error") %> prohibited this lesso from being saved:</h2>
+
+      <ul>
+        <% lesso.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div>
+    <%= form.label :course_id, style: "display: block" %>
+    <%= form.text_field :course_id %>
+  </div>
+
+  <div>
+    <%= form.label :unit_id, style: "display: block" %>
+    <%= form.text_field :unit_id %>
+  </div>
+
+  <div>
+    <%= form.label :name, style: "display: block" %>
+    <%= form.text_field :name %>
+  </div>
+
+  <div>
+    <%= form.label :filename, style: "display: block" %>
+    <%= form.text_field :filename %>
+  </div>
+
+  <div>
+    <%= form.submit %>
+  </div>
+<% end %>
