@@ -1,10 +1,9 @@
-<p style="color: green"><%= notice %></p>
-
-<%= render @lesson %>
-
-<div>
-  <%= link_to "Edit this lesson", edit_lesson_path(@lesson) %> |
-  <%= link_to "Back to lessons", lessons_path %>
-
-  <%= button_to "Destroy this lesson", @lesson, method: :delete %>
-</div>
+<%= turbo_frame_tag "video-player-container", class: "aspect-video flex items-center w-full lg:rounded-2xl lg:overflow-hidden bg-black" do %>
+  <% if @lesson.filename.present? %>
+    <video id="player" src="<%= video_lesson_path(@lesson) %>" class="c-player-iframe h-auto w-full flex-1 aspect-video bg-black" controls preload="metadata" controlslist="nodownload"></video>
+  <% else %>
+    <div class="flex items-center justify-center h-full text-white">
+      <p>No video available for this lesson</p>
+    </div>
+  <% end %>
+<% end %>

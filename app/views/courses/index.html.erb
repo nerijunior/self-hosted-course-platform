@@ -2,8 +2,12 @@
 
 <% content_for :title, "Todos os cursos" %>
 
-<div id="courses" class="mb-3">
+<div id="courses" class="mb-3 grid grid-cols-3 gap-4">
   <% @courses.each do |course| %>
     <%= render course %>
+  <% end %>
+
+  <% if @courses.empty? %>
+    Nenhum curso carregado
   <% end %>
 </div>

@@ -13,31 +13,19 @@
 ActiveRecord::Schema[8.1].define(version: 2025_11_01_061328) do
   create_table "courses", force: :cascade do |t|
     t.datetime "created_at", null: false
-    t.string "name"
-    t.string "path"
+    t.string "name", null: false
+    t.string "path", null: false
+    t.string "status", default: "importing", null: false
     t.datetime "updated_at", null: false
   end
 
   create_table "lessons", force: :cascade do |t|
-    t.integer "course_id", null: false
     t.datetime "created_at", null: false
     t.string "filename"
     t.string "name"
     t.integer "unit_id", null: false
     t.datetime "updated_at", null: false
-    t.index ["course_id"], name: "index_lessons_on_course_id"
     t.index ["unit_id"], name: "index_lessons_on_unit_id"
-  end
-
-  create_table "lessos", force: :cascade do |t|
-    t.integer "course_id", null: false
-    t.datetime "created_at", null: false
-    t.string "filename", null: false
-    t.string "name", null: false
-    t.integer "unit_id", null: false
-    t.datetime "updated_at", null: false
-    t.index ["course_id"], name: "index_lessos_on_course_id"
-    t.index ["unit_id"], name: "index_lessos_on_unit_id"
   end
 
   create_table "sessions", force: :cascade do |t|
@@ -53,6 +41,7 @@ ActiveRecord::Schema[8.1].define(version: 2025_11_01_061328) do
     t.integer "course_id", null: false
     t.datetime "created_at", null: false
     t.string "name", null: false
+    t.string "path", null: false
     t.datetime "updated_at", null: false
     t.index ["course_id"], name: "index_units_on_course_id"
   end
@@ -65,10 +54,7 @@ ActiveRecord::Schema[8.1].define(version: 2025_11_01_061328) do
     t.index ["email_address"], name: "index_users_on_email_address", unique: true
   end
 
-  add_foreign_key "lessons", "courses"
   add_foreign_key "lessons", "units"
-  add_foreign_key "lessos", "courses"
-  add_foreign_key "lessos", "units"
   add_foreign_key "sessions", "users"
   add_foreign_key "units", "courses"
 end

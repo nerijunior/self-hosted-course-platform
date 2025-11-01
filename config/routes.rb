@@ -1,5 +1,9 @@
 Rails.application.routes.draw do
-  resources :lessons
+  resources :lessons do
+    member do
+      get :video
+    end
+  end
   resources :lessos
   resources :units
   resource :session

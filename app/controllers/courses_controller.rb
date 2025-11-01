@@ -57,6 +57,11 @@ class CoursesController < ApplicationController
     end
   end
 
+  def refresh
+    ReloadCoursesJob.perform_later
+    redirect_to root_path, notice: "Cursos serão carregados, aguarde."
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_course

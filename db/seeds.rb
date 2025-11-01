@@ -3,6 +3,6 @@ User.create!(
   password_digest: BCrypt::Password.create('123qweasd')
 )
 
-c = Course.create!(name: "Primeiro Curso")
-u = Unit.create!(course: c, name: "Primeira unidade")
-l = Lesson.create!(course: c, unit: u, name: "Primeira aula", filename: 'arquivo.mp4')
+# c = Course.create!(name: "Primeiro Curso")
+# u = Unit.create!(course: c, name: "Primeira unidade")
+# l = Lesson.create!(course: c, unit: u, name: "Primeira aula", filename: 'arquivo.mp4')
