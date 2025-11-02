@@ -9,6 +9,6 @@ class Course < ApplicationRecord
   }
 
   def thumb
-    units.first.lessons.first.cover
+    units.first&.lessons.first&.cover
   end
 end
