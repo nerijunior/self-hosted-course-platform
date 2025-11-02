@@ -1,0 +1,97 @@
+{
+  "ignored_warnings": [
+    {
+      "warning_type": "Command Injection",
+      "warning_code": 14,
+      "fingerprint": "1b2d6abf13fe28baa1c66398edc5fa1ba70681b8942d14e7c9042df3c07b454b",
+      "check_name": "Execute",
+      "message": "Possible command injection",
+      "file": "app/jobs/reload_course_job.rb",
+      "line": 34,
+      "link": "https://brakemanscanner.org/docs/warning_types/command_injection/",
+      "code": "system(\"ffmpeg -y -i \\\"#{file}\\\" -ss 00:00:05 -vframes 1 -update 1 \\\"#{\"#{File.dirname(file)}/#{File.basename(file, \".*\")}_cover.jpg\"}\\\"\")",
+      "render_path": null,
+      "location": {
+        "type": "method",
+        "class": "ReloadCourseJob",
+        "method": "perform"
+      },
+      "user_input": "file",
+      "confidence": "Medium",
+      "cwe_id": [
+        77
+      ],
+      "note": ""
+    },
+    {
+      "warning_type": "File Access",
+      "warning_code": 16,
+      "fingerprint": "207e3e8651ac9d498c27c9541c5a950fe5387fd0f7fb56e85ab0891e4398e26f",
+      "check_name": "FileAccess",
+      "message": "Model attribute used in file name",
+      "file": "app/controllers/lessons_controller.rb",
+      "line": 88,
+      "link": "https://brakemanscanner.org/docs/warning_types/file_access/",
+      "code": "File.open(Lesson.find(params.expect(:id)).filename, \"rb\")",
+      "render_path": null,
+      "location": {
+        "type": "method",
+        "class": "LessonsController",
+        "method": "video"
+      },
+      "user_input": "Lesson.find(params.expect(:id)).filename",
+      "confidence": "Medium",
+      "cwe_id": [
+        22
+      ],
+      "note": ""
+    },
+    {
+      "warning_type": "File Access",
+      "warning_code": 16,
+      "fingerprint": "207e3e8651ac9d498c27c9541c5a950fe5387fd0f7fb56e85ab0891e4398e26f",
+      "check_name": "FileAccess",
+      "message": "Model attribute used in file name",
+      "file": "app/controllers/lessons_controller.rb",
+      "line": 111,
+      "link": "https://brakemanscanner.org/docs/warning_types/file_access/",
+      "code": "File.open(Lesson.find(params.expect(:id)).filename, \"rb\")",
+      "render_path": null,
+      "location": {
+        "type": "method",
+        "class": "LessonsController",
+        "method": "video"
+      },
+      "user_input": "Lesson.find(params.expect(:id)).filename",
+      "confidence": "Medium",
+      "cwe_id": [
+        22
+      ],
+      "note": ""
+    },
+    {
+      "warning_type": "File Access",
+      "warning_code": 16,
+      "fingerprint": "e8ee77fffefb49d5388880cff576846b084db701c39644cb9339aa345f69f896",
+      "check_name": "SendFile",
+      "message": "Model attribute used in file name",
+      "file": "app/controllers/lessons_controller.rb",
+      "line": 120,
+      "link": "https://brakemanscanner.org/docs/warning_types/file_access/",
+      "code": "send_file(Lesson.find(params.expect(:id)).filename, :type => \"video/mp4\", :disposition => \"inline\")",
+      "render_path": null,
+      "location": {
+        "type": "method",
+        "class": "LessonsController",
+        "method": "video"
+      },
+      "user_input": "Lesson.find(params.expect(:id)).filename",
+      "confidence": "Medium",
+      "cwe_id": [
+        22
+      ],
+      "note": ""
+    }
+  ],
+  "brakeman_version": "7.1.0"
+}

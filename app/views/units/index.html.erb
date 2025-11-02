@@ -8,9 +8,13 @@
   <% @units.each do |unit| %>
     <%= render unit %>
     <p>
-      <%= link_to "Show this unit", unit %>
+      <% if unit.lessons.any? %>
+        <%= link_to "Start unit", [@course, unit, unit.lessons.order(:created_at).first] %>
+      <% else %>
+        <span class="text-muted">No lessons available</span>
+      <% end %>
     </p>
   <% end %>
 </div>
 
-<%= link_to "New unit", new_unit_path %>
+<%= link_to "New unit", new_course_unit_path(@course) %>

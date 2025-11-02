@@ -1,5 +1,5 @@
 class Course < ApplicationRecord
-  has_many :units
+  has_many :units, dependent: :destroy
 
   enum :status, {
     importing: "importing",

@@ -22,6 +22,11 @@
   </div>
 
   <div>
+    <%= form.label :path, style: "display: block" %>
+    <%= form.text_field :path %>
+  </div>
+
+  <div>
     <%= form.submit "Save", class: "btn my-3 btn-primary" %>
   </div>
 <% end %>

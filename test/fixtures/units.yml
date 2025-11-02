@@ -3,7 +3,9 @@
 one:
   course: one
   name: MyString
+  path: /path/to/unit/one
 
 two:
   course: two
   name: MyString
+  path: /path/to/unit/two

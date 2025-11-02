@@ -10,7 +10,12 @@ class UnitsController < ApplicationController
   # GET /units/1 or /units/1.json
   def show
     @lesson = @unit.lessons.order(:created_at).first
-    redirect_to [ @course, @unit, @lesson ] and return if @lesson.present?
+    if @lesson.present?
+      redirect_to [ @course, @unit, @lesson ]
+    else
+      # If no lessons exist for this unit, return 404
+      head :not_found
+    end
   end
 
   # GET /units/new
@@ -55,7 +60,7 @@ class UnitsController < ApplicationController
     @unit.destroy!
 
     respond_to do |format|
-      format.html { redirect_to units_path, notice: "Unit was successfully destroyed.", status: :see_other }
+      format.html { redirect_to course_units_path(@course), notice: "Unit was successfully destroyed.", status: :see_other }
       format.json { head :no_content }
     end
   end
@@ -73,6 +78,6 @@ class UnitsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def unit_params
-      params.expect(unit: [ :course_id, :name ])
+      params.expect(unit: [ :course_id, :name, :path ])
     end
 end
