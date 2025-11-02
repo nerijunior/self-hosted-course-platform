@@ -14,7 +14,9 @@ class ReloadCoursesJob < ApplicationJob
 
     ActiveRecord::Base.transaction do
       dirs.each do |dir|
-        course = Course.find_or_create_by!(name: File.basename(dir), path: dir)
+        course = Course.find_or_create_by!(path: dir) do |c|
+          c.name = File.basename(dir)
+        end
 
         if course.persisted?
           course.update!(status: :refreshing)

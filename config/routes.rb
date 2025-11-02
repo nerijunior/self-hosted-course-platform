@@ -12,8 +12,13 @@ Rails.application.routes.draw do
         end
       end
     end
+
     collection do
       get "refresh"
+    end
+
+    member do
+      get "reprocess"
     end
   end
   # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.

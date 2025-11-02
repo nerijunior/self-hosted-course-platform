@@ -12,7 +12,9 @@ class ReloadCourseJob < ApplicationJob
 
     ActiveRecord::Base.transaction do
       units_dirs.each do |dir|
-        unit = Unit.find_or_create_by!(course: course, name: File.basename(dir), path: dir)
+        unit = Unit.find_or_create_by!(course: course, path: dir) do |u|
+          u.name = File.basename(dir)
+        end
 
         movie_files = Dir.glob("#{dir}/*").select { |e| File.extname(e) == ".mp4" }
 

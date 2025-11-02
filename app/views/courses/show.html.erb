@@ -12,6 +12,18 @@
   <% end %>
   
   <%= render 'shared/components/page_title', title: @course.name %>
+
+  <details class="dropdown dropdown-end">
+    <summary class="btn m-1"><i class="ti ti-dots"></i></summary>
+    <ul class="menu dropdown-content bg-base-100 rounded-box z-1 w-52 p-2 shadow-sm">
+      <li>
+        <%= link_to reprocess_course_path(@course), data: { turbo: false } do %>
+          <i class="ti ti-refresh"></i>
+          Reprocessar este curso
+          <% end %>
+        </li>
+    </ul>
+  </details>
 </div>
 
 <div class="mb-3">

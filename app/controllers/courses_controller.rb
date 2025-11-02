@@ -1,5 +1,5 @@
 class CoursesController < ApplicationController
-  before_action :set_course, only: %i[ show edit update destroy ]
+  before_action :set_course, only: %i[ show edit update destroy reprocess ]
 
   # GET /courses or /courses.json
   def index
@@ -60,6 +60,11 @@ class CoursesController < ApplicationController
   def refresh
     ReloadCoursesJob.perform_later
     redirect_to root_path, notice: "Cursos serão carregados, aguarde."
+  end
+
+  def reprocess
+    ReloadCourseJob.perform_later(@course)
+    redirect_to @course, notice: "Curso será reprocessado, aguarde."
   end
 
   private
