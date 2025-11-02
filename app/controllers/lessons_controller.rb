@@ -1,6 +1,7 @@
 require "digest"
 
 class LessonsController < ApplicationController
+  before_action :set_course_and_unit
   before_action :set_lesson, only: %i[ show edit update destroy video ]
 
   # GET /lessons or /lessons.json
@@ -152,6 +153,11 @@ class LessonsController < ApplicationController
   end
 
   private
+    def set_course_and_unit
+      @course = Course.find(params.expect(:course_id))
+      @unit = @course.units.find(params.expect(:unit_id))
+    end
+
     # Use callbacks to share common setup or constraints between actions.
     def set_lesson
       @lesson = Lesson.find(params.expect(:id))

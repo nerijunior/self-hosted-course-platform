@@ -1,16 +1,74 @@
-<%= turbo_frame_tag "video-player-container", class: "aspect-video flex items-center w-full lg:rounded-2xl lg:overflow-hidden bg-black" do %>
-  <% if @lesson.filename.present? %>
-    <video id="player" 
-           src="<%= video_lesson_path(@lesson) %>" 
+<div class="hidden md:block breadcrumbs text-sm my-3">
+  <ul>
+    <li><%= link_to 'Todos os cursos', root_path %></li>
+    <li><%= link_to @course.name, course_path(@course) %></li>
+    <li><%= @unit.name %></li>
+  </ul>
+</div>
+
+<div class="flex justify-between items-center mb-3">
+  <%= link_to course_path(@course), class: "btn" do %>
+    <i class="ti ti-arrow-left"></i>
+    Voltar
+  <% end %>
+
+  <%= render 'shared/components/page_title', title: @unit.name %>
+
+  <% if @unit.next %>
+    <%= link_to course_unit_path(@course, @unit.next), class: "btn" do %>
+      Próxima unidade
+      <i class="ti ti-arrow-right"></i>
+    <% end %>
+  <% end %>
+</div>
+
+<div class="mb-3">
+  <%= link_to "Editar esta unidade", edit_course_unit_path(@course, @unit) %>
+</div>
+
+<section class="flex items-start flex-col peer lg:flex-row w-full lg:gap-4 relative">
+  <div class="lesson-display flex flex-col gap-[0.375rem] relative mx-auto justify-end w-full lg:w-[85%] h-auto lg:h-auto xl:w-[63.05%] leading-none overflow-visible aspect-auto">
+    <%= turbo_frame_tag "video-player-container", class: "aspect-video flex items-center w-full lg:rounded-2xl lg:overflow-hidden bg-black" do %>
+      <% if @lesson.filename.present? %>
+        <video id="player" 
+           src="<%= video_course_unit_lesson_path(@course, @unit, @lesson) %>" 
            class="c-player-iframe h-auto w-full flex-1 aspect-video bg-black" 
            controls 
            preload="metadata" 
            controlslist="nodownload"
            crossorigin="anonymous"
            playsinline></video>
-  <% else %>
-    <div class="flex items-center justify-center h-full text-white">
-      <p>No video available for this lesson</p>
+      <% else %>
+        <div class="flex items-center justify-center h-full text-white">
+          <p>No video available for this lesson</p>
+        </div>
+      <% end %>
+    <% end %>
+
+    <h2><%= @lesson.name %></h2>
+
+    <div class="mb-3">
+      <%= link_to "Editar esta aula", edit_course_unit_lesson_path(@course, @unit, @lesson) %>
     </div>
-  <% end %>
-<% end %>
+
+  </div>
+
+  <aside data-type="lessonDrawer" data-theater="false" class="hidden md:block w-full lg:max-w-[35.35%] overflow-y-auto peer-data-[state='checked']/lesson:hidden" style="height: 907px;">
+    <% @course.units.each do |unit| %>
+      <div class="collapse bg-base-100 border-base-300 border mb-3">
+        <input type="checkbox" <%= 'checked' if unit == @unit %> />
+        <div class="collapse-title font-semibold"><%= unit.name %></div>
+        <div class="collapse-content text-sm">
+          <ul class="steps steps-vertical">
+            <% unit.lessons.each do |lesson| %>
+              <!-- <li class="step step-primary"><%= lesson.name %></li> -->
+              <li class="step <%= 'step-primary font-semibold' if lesson == @lesson %>">
+                <%= link_to lesson.name, [@course, unit, lesson] %>
+              </li>
+            <% end %>
+          </ul>
+        </div>
+      </div>
+    <% end %>
+  </aside>
+</section>

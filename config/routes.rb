@@ -1,16 +1,16 @@
 Rails.application.routes.draw do
-  resources :lessons do
-    member do
-      get :video
-    end
-  end
-  resources :lessos
-  resources :units
   resource :session
   resources :passwords, param: :token
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
   resources :courses do
+    resources :units do
+      resources :lessons do
+        member do
+          get :video
+        end
+      end
+    end
     collection do
       get "refresh"
     end

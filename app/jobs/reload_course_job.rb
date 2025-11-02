@@ -22,10 +22,14 @@ class ReloadCourseJob < ApplicationJob
 
         movie_files.each do |file|
           Rails.logger.info("Creating lesson from file #{file}")
-          unit.lessons.find_or_create_by!(name: File.basename(file, ".*"), filename: file)
+          lesson = unit.lessons.find_or_create_by!(name: File.basename(file, ".*"), filename: file)
 
           cover_path = "#{File.dirname(file)}/#{File.basename(file, '.*')}_cover.jpg"
-          system("ffmpeg -y -i \"#{file}\" -ss 00:00:05 -vframes 1 \"#{cover_path}\"")
+          if File.exist?(cover_path) && lesson.cover.attached?
+            next
+          end
+
+          system("ffmpeg -y -i \"#{file}\" -ss 00:00:05 -vframes 1 -update 1 \"#{cover_path}\"")
 
           if File.exist?(cover_path)
             lesson.cover.attach(io: File.open(cover_path), filename: File.basename(cover_path))

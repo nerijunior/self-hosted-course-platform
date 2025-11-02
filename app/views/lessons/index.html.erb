@@ -8,9 +8,9 @@
   <% @lessons.each do |lesson| %>
     <%= render lesson %>
     <p>
-      <%= link_to "Show this lesson", lesson %>
+      <%= link_to "Show this lesson", [@course, @unit, lesson] %>
     </p>
   <% end %>
 </div>
 
-<%= link_to "New lesson", new_lesson_path %>
+<%= link_to "New lesson", new_course_unit_lesson_path(@course, @unit) %>

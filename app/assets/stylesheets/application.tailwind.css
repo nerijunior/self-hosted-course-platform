@@ -1,4 +1,6 @@
 @import "tailwindcss";
+@import url("https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/dist/tabler-icons.min.css");
+
 
 @plugin "daisyui" {
   themes: winter --default

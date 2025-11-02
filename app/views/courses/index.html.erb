@@ -1,8 +1,8 @@
-<p style="color: green"><%= notice %></p>
+<div class="my-3">
+  <%= render 'shared/components/page_title', title: "Todos os cursos" %>
+</div>
 
-<% content_for :title, "Todos os cursos" %>
-
-<div id="courses" class="mb-3 grid grid-cols-3 gap-4">
+<div id="courses" class="mb-3 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-2">
   <% @courses.each do |course| %>
     <%= render course %>
   <% end %>

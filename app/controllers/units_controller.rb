@@ -1,4 +1,5 @@
 class UnitsController < ApplicationController
+  before_action :set_course
   before_action :set_unit, only: %i[ show edit update destroy ]
 
   # GET /units or /units.json
@@ -8,6 +9,8 @@ class UnitsController < ApplicationController
 
   # GET /units/1 or /units/1.json
   def show
+    @lesson = @unit.lessons.order(:created_at).first
+    redirect_to [ @course, @unit, @lesson ] and return if @lesson.present?
   end
 
   # GET /units/new
@@ -25,7 +28,7 @@ class UnitsController < ApplicationController
 
     respond_to do |format|
       if @unit.save
-        format.html { redirect_to @unit, notice: "Unit was successfully created." }
+        format.html { redirect_to [ @course, @unit ], notice: "Unit was successfully created." }
         format.json { render :show, status: :created, location: @unit }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -38,7 +41,7 @@ class UnitsController < ApplicationController
   def update
     respond_to do |format|
       if @unit.update(unit_params)
-        format.html { redirect_to @unit, notice: "Unit was successfully updated.", status: :see_other }
+        format.html { redirect_to [ @course, @unit ], notice: "Unit was successfully updated.", status: :see_other }
         format.json { render :show, status: :ok, location: @unit }
       else
         format.html { render :edit, status: :unprocessable_entity }
@@ -58,6 +61,11 @@ class UnitsController < ApplicationController
   end
 
   private
+
+    def set_course
+      @course = Course.find(params.expect(:course_id))
+    end
+
     # Use callbacks to share common setup or constraints between actions.
     def set_unit
       @unit = Unit.find(params.expect(:id))

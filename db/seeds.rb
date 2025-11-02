@@ -1,6 +1,7 @@
 User.create!(
   email_address: 'neri@nerijunior.com',
-  password_digest: BCrypt::Password.create('123qweasd')
+  password_digest: BCrypt::Password.create('123qweasd'),
+  admin: true
 )
 
 # c = Course.create!(name: "Primeiro Curso")

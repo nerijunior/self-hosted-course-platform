@@ -1,31 +1,39 @@
-<% content_for(:title, @course.name) %>
+<div class="breadcrumbs text-sm my-3">
+  <ul>
+    <li><%= link_to 'Todos os cursos', root_path %></li>
+    <li><%= @course.name %></li>
+  </ul>
+</div>
 
-<p style="color: green"><%= notice %></p>
+<div class="flex justify-between items-center mb-3">
+  <%= link_to course_path(@course), class: "btn" do %>
+    <i class="ti ti-arrow-left"></i>
+    Voltar
+  <% end %>
+  
+  <%= render 'shared/components/page_title', title: @course.name %>
+</div>
 
 <div class="mb-3">
   <%= link_to "Editar este curso", edit_course_path(@course) %>
 </div>
 
-<section class="flex items-start flex-col peer lg:flex-row w-full lg:gap-8 lg:pr-[3.4rem] lg:pl-[4.375rem] relative">
-  <div class="lesson-display flex flex-col gap-[0.375rem] relative mx-auto justify-end w-full lg:w-[85%] h-auto lg:h-auto xl:w-[63.05%] leading-none overflow-visible aspect-auto">
-    <%= turbo_frame_tag "video-player-container", class: "aspect-video flex items-center w-full lg:rounded-2xl lg:overflow-hidden bg-black" do %>
-    <% end %>
-  </div>
+<div class="divider"></div>
 
-  <aside data-type="lessonDrawer" data-theater="false" class="hidden md:block w-full lg:max-w-[35.35%] overflow-y-auto peer-data-[state='checked']/lesson:hidden" style="height: 907px;">
-    <% @course.units.each do |unit| %>
-      <div class="collapse bg-base-100 border-base-300 border mb-3">
-        <input type="checkbox" />
-        <div class="collapse-title font-semibold"><%= unit.name %></div>
-        <div class="collapse-content text-sm">
-          <ul class="steps steps-vertical">
-            <% unit.lessons.each do |lesson| %>
-              <!-- <li class="step step-primary"><%= lesson.name %></li> -->
-              <li class="step"><%= link_to lesson.name, lesson, data: { 'turbo-frame': "video-player-container" } %></li>
-            <% end %>
-          </ul>
-        </div>
-      </div>
+<div class="grid grid-cols-2 md:grid-cols-3 gap-2">
+  <% @course.units.each do |unit| %>
+  <div class="card bg-base-100 shadow-sm">
+    <figure>
+      <img
+        src="https://img.daisyui.com/images/stock/photo-1606107557195-0e29a4b5b4aa.webp"
+        alt="Shoes" />
+    </figure>
+    <div class="card-body">
+      <h2 class="card-title h-15">
+        <%= link_to unit.name, [@course, unit] %>
+      </h2>
+      <progress class="progress w-full" value="0" max="<%= unit.lessons.count %>"></progress>
+    </div>
+  </div>
     <% end %>
-  </aside>
-</section>
+</div>

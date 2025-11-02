@@ -9,6 +9,8 @@ class Course < ApplicationRecord
   }
 
   def thumb
+    return unless units.first
+    return unless units.first&.lessons.first
     units.first&.lessons.first&.cover
   end
 end

@@ -1,14 +1,19 @@
 <div id="<%= dom_id course %>">
-  <div class="card bg-base-100 w-96 shadow-sm">
+  <div class="card bg-base-100 shadow-sm">
     <figure class="px-10 pt-10">
-      <% if course.thumb.persisted? %>
+      <% if course.thumb&.persisted? %>
         <%= image_tag course.thumb.variant(:thumb), class: 'rounded-xl' %>
+      <% else %>
+        <div class="w-64 h-36 bg-gray-200 flex items-center justify-center rounded-xl">
+          <span class="text-gray-500">No Image</span>
+        </div>
       <% end %>
     </figure>
+
     <div class="card-body items-center text-center">
-      <h2 class="card-title"><%= course.name%></h2>
+      <h2 class="card-title h-24"><%= course.name%></h2>
       <p><%= course.units.count %> Unidades</p>
-      <p><%= course.path %></p>
+      <!-- <p><%= course.path %></p> -->
       <div class="card-actions">
         <%= link_to 'Acessar', course, class: "btn btn-primary" %>
       </div>

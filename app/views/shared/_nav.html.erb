@@ -10,7 +10,9 @@
         <li>
           <%= link_to 'Todos os Cursos', root_path %>
         </li>
-        <li><%= link_to "Recarregar cursos", refresh_courses_path %></li>
+        <% if current_user.admin? %>
+          <li><%= link_to "Recarregar cursos", refresh_courses_path, data: { turbo: false } %></li>
+        <% end %>
         <li>
           <a>Parent</a>
           <ul class="p-2">
@@ -36,7 +38,9 @@
       <%#     </ul> %>
       <%#   </details> %>
       <%# </li> %>
-      <li><%= link_to "Recarregar cursos", refresh_courses_path %></li>
+      <% if current_user.admin? %>
+        <li><%= link_to "Recarregar cursos", refresh_courses_path, data: { turbo: false } %></li>
+      <% end %>
     </ul>
   </div>
   <div class="navbar-end">

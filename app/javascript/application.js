@@ -282,7 +282,9 @@ function initializeVideoPlayer() {
     }
 
     // Show spinner immediately when player is created
-    showLoadingSpinner();
+    if (player.loading) {
+        showLoadingSpinner();
+    }
 
     // YouTube-like keyboard shortcuts
     player.on('ready', () => {
