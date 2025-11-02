@@ -2,7 +2,21 @@
 
 Rails 8 + Tailwind + Solid
 
-Databse: sqlite3
+Database: sqlite3
+
+## How to organize yours files
+
+There's no convention defined for the folder names you only need to keep the structure like this:
+
+```
+/courses
+  - /Course name # Main course folder
+    - /Unit 1 - Name # Unit folder
+      - lesson-1.mp4
+      - lesson-2.mp4
+    - /Second Unit Name
+      - lesson-1.mp4
+```
 
 ## Build
 
