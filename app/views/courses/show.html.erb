@@ -10,7 +10,7 @@
     <i class="ti ti-arrow-left"></i>
     Voltar
   <% end %>
-  
+
   <%= render 'shared/components/page_title', title: @course.name %>
 
   <details class="dropdown dropdown-end">
@@ -20,8 +20,8 @@
         <%= link_to reprocess_course_path(@course), data: { turbo: false } do %>
           <i class="ti ti-refresh"></i>
           Reprocessar este curso
-          <% end %>
-        </li>
+        <% end %>
+      </li>
     </ul>
   </details>
 </div>
@@ -34,22 +34,26 @@
 
 <div class="grid grid-cols-2 md:grid-cols-3 gap-2">
   <% @course.units.each do |unit| %>
-  <div class="card bg-base-100 shadow-sm">
-    <figure>
-      <img
-        src="https://img.daisyui.com/images/stock/photo-1606107557195-0e29a4b5b4aa.webp"
-        alt="Shoes" />
-    </figure>
-    <div class="card-body">
-      <h2 class="card-title h-15">
-        <%= link_to unit.name, [@course, unit] %>
-      </h2>
+    <div class="card bg-base-100 shadow-sm">
+      <figure>
+        <% if unit.thumb %>
+          <%= image_tag unit.thumb, alt: unit.name %>
+        <% else %>
+          <div class="w-full h-44 bg-gray-200 flex items-center justify-center">
+            <span class="text-gray-500">No cover</span>
+          </div>
+        <% end %>
+      </figure>
+      <div class="card-body">
+        <h2 class="card-title h-15">
+          <%= link_to unit.name, [@course, unit] %>
+        </h2>
 
-      <progress class="progress w-full" value="<%= unit.completed_lessons_count %>" max="<%= unit.lessons.count %>"></progress>
-      <p>
-        <%= unit.completed_lessons_count %> de <%= unit.lessons.count %> aulas concluídas
-      </p>
+        <progress class="progress w-full" value="<%= unit.completed_lessons_count %>" max="<%= unit.lessons.count %>"></progress>
+        <p>
+          <%= unit.completed_lessons_count %> de <%= unit.lessons.count %> aulas concluídas
+        </p>
+      </div>
     </div>
-  </div>
-    <% end %>
+  <% end %>
 </div>

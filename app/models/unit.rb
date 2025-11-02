@@ -18,4 +18,21 @@ class Unit < ApplicationRecord
     return nil unless next_unit
     next_unit.lessons.any? ? next_unit : nil
   end
+
+  def thumb
+    if cover.attached?
+      cover
+    else
+      any_lesson_cover
+    end
+  end
+
+  private
+
+  def any_lesson_cover
+    lessons.each do |lesson|
+      return lesson.cover if lesson.cover.attached?
+    end
+    nil
+  end
 end
