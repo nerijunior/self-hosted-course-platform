@@ -2,7 +2,7 @@ require "digest"
 
 class LessonsController < ApplicationController
   before_action :set_course_and_unit
-  before_action :set_lesson, only: %i[ show edit update destroy video ]
+  before_action :set_lesson, only: %i[ show edit update destroy toggle_complete video ]
 
   # GET /lessons or /lessons.json
   def index
@@ -11,9 +11,26 @@ class LessonsController < ApplicationController
 
   # GET /lessons/1 or /lessons/1.json
   def show
+    @user_lesson = UserLesson.find_by(user: current_user, lesson: @lesson)
     respond_to do |format|
       format.html
       format.json
+    end
+  end
+
+  def toggle_complete
+    @user_lesson = UserLesson.find_or_initialize_by(user: current_user, lesson: @lesson)
+    if @user_lesson.persisted?
+      @user_lesson.destroy
+      notice = "Marcações de aula removidas."
+    else
+      @user_lesson.save!
+      notice = "Aula marcada como concluída."
+    end
+
+    respond_to do |format|
+      format.html { redirect_to [ @course, @unit, @lesson ], notice: notice }
+      format.json { head :no_content }
     end
   end
 

@@ -19,7 +19,7 @@ module Authentication
     end
 
     def current_user
-      resume_session.user
+      Current.user
     end
 
     def require_authentication

@@ -45,11 +45,19 @@
       <% end %>
     <% end %>
 
-    <h2><%= @lesson.name %></h2>
+    <div class="flex justify-between items-center mb-3 mt-2">
+      <h2 class="text-2xl font-bold"><%= @lesson.name %></h2>
+
+      <%= form_with url: toggle_complete_course_unit_lesson_path(@course, @unit, @lesson), method: :post, data: { controller: 'auto-submit' }  do |form| %>
+        Concluída? <input type="checkbox" <%= 'checked="checked"' if @user_lesson.present? %>" class="toggle checked:text-green-800 checked:border-green-600 checked:bg-green-400" data-action="auto-submit#submit" />
+      <% end %>
+    </div>
 
     <div class="mb-3">
       <%= link_to "Editar esta aula", edit_course_unit_lesson_path(@course, @unit, @lesson) %>
     </div>
+
+    <code><%= @lesson.filename %></code>
 
   </div>
 

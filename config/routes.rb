@@ -8,6 +8,7 @@ Rails.application.routes.draw do
       resources :lessons do
         member do
           get :video
+          post :toggle_complete
         end
       end
     end

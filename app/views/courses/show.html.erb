@@ -32,7 +32,11 @@
       <h2 class="card-title h-15">
         <%= link_to unit.name, [@course, unit] %>
       </h2>
-      <progress class="progress w-full" value="0" max="<%= unit.lessons.count %>"></progress>
+
+      <progress class="progress w-full" value="<%= unit.completed_lessons_count %>" max="<%= unit.lessons.count %>"></progress>
+      <p>
+        <%= unit.completed_lessons_count %> de <%= unit.lessons.count %> aulas concluídas
+      </p>
     </div>
   </div>
     <% end %>
